@@ -55,9 +55,14 @@ const sidebarItem: menu[] = [
         to: '/icons'
     },
     {
-        title: 'Sample Page',
+        title: 'Book list',
         icon: ApertureIcon,
         to: '/sample-page'
+    },
+    {
+        title: 'Book Page',
+        icon: ApertureIcon,
+        to: '/book-page/1'
     },
 ];
 

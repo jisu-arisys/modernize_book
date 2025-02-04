@@ -46,8 +46,10 @@ public class BookController {
 	@GetMapping(value = "/bookDetail/{bookId}")
 	public ResponseEntity<Map<String, Object>> getBookDetail(@PathVariable("bookId") long bookId ) {
 		Map<String, Object> map = new HashMap<>();
-		book.setBookId(bookId);
-		map.put("book", book);
+		switch ((int) bookId){
+			case 1: map.put("book", book); break;
+			case 2: map.put("book", book2); break;
+		}
 		map.put("comments", Datas.comments);
 
 		return ResponseEntity.ok(map);
