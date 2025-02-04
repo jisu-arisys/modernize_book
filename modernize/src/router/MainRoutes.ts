@@ -31,6 +31,11 @@ const MainRoutes = {
             path: '/sample-page',
             component: () => import('@/views/pages/SamplePage.vue')
         },
+        {
+            name: 'BookDetail',
+            path: '/book-page/:bookId',
+            component: () => import('@/views/pages/BookPage.vue')
+        },
     ]
 };
 
