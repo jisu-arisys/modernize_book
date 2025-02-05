@@ -31,7 +31,11 @@ public class BookController {
 		static List<Book> books = Arrays.asList( book, book2);
 		static List<Comment> comments = Arrays.asList(
 			 new Comment( 1L, book, me, "대여신청합니다", Status.예약,Date.valueOf(date), Date.valueOf(date0), true),
-			 new Comment( 1L, book, user, "대여신청합니다", Status.예약,Date.valueOf(date2), Date.valueOf(date), true)
+			 new Comment( 2L, book, me, "대여신청합니다", Status.연체,Date.valueOf(date), Date.valueOf(date0), true),
+			 new Comment( 3L, book, me, "대여신청합니다", Status.대출,Date.valueOf(date), Date.valueOf(date0), true),
+			 new Comment( 4L, book, me, "대여신청합니다", Status.반납,Date.valueOf(date), Date.valueOf(date0), true),
+			 new Comment( 5L, book, me, "대여신청합니다", Status.반납,Date.valueOf(date), Date.valueOf(date0), true),
+			 new Comment( 6L, book, user, "대여신청합니다", Status.반납,Date.valueOf(date2), Date.valueOf(date), true)
 			 );
 
 	}

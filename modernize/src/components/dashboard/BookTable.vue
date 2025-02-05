@@ -2,10 +2,11 @@
 // setup() 내부에서는 this 가 없음, getCurrentInstance() 로 호출해야 글로벌변수 사용가능
 import { getData } from "@/data/Axios";
 import { ref, onMounted } from 'vue';
-import { router } from "@/router";
+import { useRouter } from "vue-router";
 
 const books = ref([]);
 const error = ref(null);
+const router = useRouter();
 
 onMounted(async () => {
   try{
