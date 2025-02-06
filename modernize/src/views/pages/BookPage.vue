@@ -1,68 +1,58 @@
 <script setup lang="ts">
-import UiParentCard from '@/components/shared/UiParentCard.vue';
 import BookCard from "@/components/shared/BookCard.vue";
-import Comments from "@/components/shared/Comments.vue";
-import {ref, onMounted, computed} from "vue";
+import CommentTable from "@/components/dashboard/CommentTable.vue";
+import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getData } from "@/data/Axios";
 
 const router = useRouter();
 const route = useRoute();
 const book = ref([]);
-const comments = ref([]);
-const showAll = ref(false);
+const bookId = ref<number>(0);
+const commentUrl = ref<string>('');
+const error = ref<string>('');
 
 onMounted(async () => {
-  const bookId = route.params.bookId;
-  if(!bookId){
-    await router.push('/');
-    return;
+  try {
+    let param: string | string[] | undefined = route.params.bookId;
+    if (Array.isArray(param)) {
+      bookId.value = Number(param[0]);
+    } else if (param !== undefined) {
+      bookId.value = Number(param);
+    }
+  } catch (e) {
+    handelError();
   }
 
+  if(bookId.value == 0){
+    handelError();
+  }
+
+  commentUrl.value = '/commentList/' + bookId.value;
   try {
-    const response = await getData('/bookDetail/' + bookId);
+    const response = await getData('/bookDetail/' + bookId.value);
     console.log("getBookList success", response);
     book.value = response.book;
-    comments.value = response.comments;
   } catch (err) {
-    const before = document.referrer;
-    await router.push(before);
+    handelError();
   }
 });
 
-const visibleComments = computed(() =>
-    showAll.value ? comments.value : comments.value.slice(0, 3)
-);
+const handelError = () => {
+  alert('데이터를 읽지 못하였습니다. 이전화면으로 돌아갑니다.');
+  router.back()
+}
 </script>
-<template>
-<!--    <v-row>-->
-<!--        <v-col cols="12" md="12">-->
-<!--            <UiParentCard title="Book page">-->
-<!--                <div class="pa-7 pt-1"><p class="text-body-1">{{ book }}</p></div>-->
-<!--                <div class="pa-7 pt-1"><p class="text-body-1" v-for="comment in comments">{{ comment }}</p></div>-->
-<!--            </UiParentCard>-->
-<!--        </v-col>-->
-<!--    </v-row>-->
-    <v-row>
-        <v-col cols="12" sm="9">
-          <Comments :list=visibleComments>
-            <div>
-              <h6 class="text-h6 text-muted font-weight-medium d-flex justify-center align-center mt-4">
-                <a @click.prevent="showAll = !showAll" class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium pl-2">
-                  <span v-if = !showAll> 더보기 </span>
-                  <span v-else> 감추기 </span>
 
-                </a>
-              </h6>
-            </div>
-          </Comments>
+<template>
+    <v-row>
+        <!--        변수 생성시점까지 CommentTable 컴포넌트의 랜딩을 지연시킴-->
+        <v-col cols="12" sm="9">
+          <CommentTable v-bind:get-url="commentUrl">
+          </CommentTable>
         </v-col>
         <v-col cols="12" lg="3" sm="4">
           <BookCard :card=book></BookCard>
         </v-col>
     </v-row>
 </template>
-
-<script setup>
-
-</script>

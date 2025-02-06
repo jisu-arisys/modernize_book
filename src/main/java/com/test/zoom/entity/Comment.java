@@ -17,7 +17,6 @@ import java.sql.Date;
 @ToString
 public class Comment {
 
-    @JsonIgnore
     @Id
     @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //자동증가되는 PK
@@ -27,6 +26,11 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", referencedColumnName = "book_id")
     private Book book;
+
+    @JsonProperty("bookId")
+    public long getBookId() {
+        return book != null ? book.getBookId() : 1;
+    }
 
     @JsonIgnore
     @ManyToOne()

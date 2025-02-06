@@ -37,7 +37,6 @@ const goToBookPage = (bookId) => {
         </thead>
         <tbody v-if="books.length > 0">
           <tr v-for="book in books" :key="book.bookId" class="month-item" @click="goToBookPage(book.bookId)">
-<!--            <router-link :to="`/book-page/${book.bookId}`">-->
               <td>
                 <div class="d-flex ga-3 align-center">
                   <div class="v-theme--BLUE_THEME v-avatar--density-default" style="width: 80px; height: 80px;">
@@ -60,14 +59,11 @@ const goToBookPage = (bookId) => {
               <td>
                 <h6 class="text-h6 text-right">{{ book.totalLending }}</h6>
               </td>
-<!--            </router-link>-->
           </tr>
         </tbody>
         <tbody v-else>
           <tr class="text-center">
-            data books are empty.
-            <br>
-            <span>error : {{ error }}</span>
+            data books are empty. error : {{ error }}
           </tr>
         </tbody>
       </v-table>
