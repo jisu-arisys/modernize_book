@@ -25,7 +25,7 @@ public class Db {
     static Book book = new Book(1L, "/assets/images/products/4.jpg", "독서의 이해", "임묘한", "묘한출판사", 6L, true);
     static Book book2 = new Book(2L, "/assets/images/products/3.jpg", "독서의 탐구", "임묘한", "묘한출판사", 0L, true);
     public static User me = new User(1l, Auth.ADMIN, "jisu.um", "pw", "dept", 0l, 3l, true);
-    public static User user = new User(1l,Auth.USER, "user", "pw", "dept", 0l, 3l, true);
+    public static User user = new User(2l,Auth.USER, "user", "pw", "dept", 0l, 3l, true);
     public static List<Book> books = new ArrayList<>(Arrays.asList( book, book2));
     public static List<Comment> comments = new ArrayList<>(Arrays.asList(
             new Comment( 1L, book, me, "대여신청합니다", null, null, Status.예약, Date.valueOf(date), Date.valueOf(date0), true),
