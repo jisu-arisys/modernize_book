@@ -1,10 +1,11 @@
 package com.test.zoom.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
+import com.test.zoom.data.Db;
 import jakarta.persistence.*;
 import lombok.*;
-
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import java.sql.Date;
 
 @Entity
@@ -32,6 +33,14 @@ public class Comment {
         return book != null ? book.getBookId() : 1;
     }
 
+    @JsonSetter("bookId")
+    public void setBook(long bookId) {
+        if (book == null && bookId > 0) {
+            book = new Book();
+            book.setBookId(bookId);
+        }
+    }
+
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "user_name", referencedColumnName = "user_name")
@@ -42,16 +51,32 @@ public class Comment {
         return user != null ? user.getUserName() : null;  // user가 null이 아닐 경우 userName 반환
     }
 
-    @Column(name = "detail", length = 1000, unique = true)
+    @JsonSetter("userName")
+    public void setUser(String userName) {
+        if (user == null && userName.length() > 0) {
+            user = new Db().userNameToUser(userName);
+            user.setUserName(userName);
+        }
+    }
+
+    @Column(name = "detail", length = 1000)
     private String detail;
+
+    @Column(name = "start_lending")
+    private Date startLending; // 대출시작일
+    @Column(name = "end_lending")
+    private Date endLending;   // 대출종료일
 
     @Enumerated(EnumType.STRING) // ENUM 값을 문자열로 저장
     private Status status; // 댓글 상태
 
-    @Column(name = "create_date")
+    @CreatedDate
+    @Column(name = "create_date", updatable = false, nullable = false)
     private Date createDate;  // 작성일
-    @Column(name = "update_date")
-    private Date updateDate;  // 수정일
-    private boolean activated; // 삭제여부
 
+    @LastModifiedDate
+    @Column(name = "update_date", nullable = false)
+    private Date updateDate;  // 수정일
+
+    private boolean activated; // 삭제여부
 }

@@ -37,10 +37,6 @@ public class User {
     @Column(name = "dept", length = 50)
     private String dept;
 
-    @Column(name = "start_lending")
-    private Date startLending; // 대출시작일
-    @Column(name = "end_lending")
-    private Date endLending;   // 대출종료일
     @Column(name = "count_overdue")
     private Long countOverdue;  // 연체일
     @Column(name = "total_overdue")

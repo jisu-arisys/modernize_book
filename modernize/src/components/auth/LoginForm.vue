@@ -28,8 +28,9 @@ const login = async () => {
     }
 
     const body = {
-        username: username.value,
-        password: password.value
+      authName: password.value,
+      userName: username.value,
+      password: password.value
     }
     const response = await postData('/auth/login', body);
 

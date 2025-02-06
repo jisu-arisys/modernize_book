@@ -61,18 +61,29 @@ const editStatus = (item : any) => {
     return;
   }
 
+  const today = new Date();
+  const endDay = new Date()
+      endDay.setDate(today.getDate()+7);
   const nextStatus = (() => {
     switch (item.status) {
-      case '예약': return '대출';
+      case '예약':
+        item.startLending = today.toISOString().substring(0,10);
+        item.endLending = endDay.toISOString().substring(0,10);
+        return '대출';
       case '대출':
-      case '연체': return '반납';
+      case '연체':
+        item.endLending = today.toISOString().substring(0,10);
+        return '반납';
       default: return null;
     }
   })();
 
+
+
   if(nextStatus != null) {
     if(confirm(item.bookId + '에 대한 ' + item.userName + '의 예약상태를 ['
-        + item.status +']에서 ['+ nextStatus + ']로 수정하시겠습니까?')) {
+        + item.status +']에서 ['+ nextStatus + ']로 수정하시겠습니까?\n'
+        + item.startLending + ' ~ ' + item.endLending )) {
       item.status = nextStatus;
       emit('update:comment', item);
     }
@@ -91,18 +102,24 @@ const props = withDefaults(defineProps<{
     bookId: number;
     userName: string;
     commentId: number;
+    startLending: string;
+    endLending: string;
     createDate: string;
+    update_date: string;
     detail: string;
     status: string;
   }];
 }>(), {
-  title: 'title',
+  title: 'Comment List',
   edit: true,
   list: () => ([{
     bookId: 1,
     userName: 'name',
     commentId: 1,
+    startLending: '2025-03-03',
     createDate: '2025-03-03',
+    endLending: '2025-03-03',
+    update_date: '2025-03-03',
     detail: '대출예약',
     status: '예약'
   }])
@@ -136,7 +153,7 @@ const reset =() => {
     <v-card elevation="10" class="withbg">
         <v-card-item class="pb-0">
             <v-card-title class="text-h5 pt-sm-2"> {{ title }}
-              <span class="px-6 text-body-1 textSecondary text-no-wrap  text-error">{{ error }}
+              <span class="px-6 text-body-1 textSecondary text-no-wrap  text-error"> {{ error }}
                 <slot />
               </span>
             </v-card-title>
@@ -159,7 +176,6 @@ const reset =() => {
                                 <v-row>
                                   <v-text-field v-model="editableDetail" class="mx-2" variant="outlined" density="compact" max-width="10" hide-details color="primary"></v-text-field>
                                   <v-btn class="v-btn bg-primary v-btn--variant-tonal mx-2" small @click.stop="saveDetail(item)">저장</v-btn>
-<!--                                  <v-btn class="v-btn bg-error v-btn&#45;&#45;variant-tonal" small @click.stop="resetDetail(item)">취소</v-btn>-->
                                 </v-row>
                               </template>
                               <!-- 텍스트 표시 -->
@@ -167,9 +183,11 @@ const reset =() => {
                                 <h6 class="text-body-1 font-weight-bold">{{ item.detail }}</h6>
                               </template>
                             </div>
-                            <div class="mt-n2">
-                              <p class="text-body-1 text-primary text-decoration-none">
-                                {{ item.userName }}</p>
+                            <div class="mt-2">
+                              <span class="text-body-1 text-primary text-decoration-none">
+                                {{ item.userName }} </span>
+                              <span class="text-body-1 text-muted text-decoration-none">
+                                : {{ item.startLending}} ~ {{item.endLending}}</span>
                             </div>
                         </v-col>
                     </v-row>

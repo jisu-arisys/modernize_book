@@ -34,12 +34,12 @@ const getComments = async (getUrl: string) => {
   }
 }
 
-const handleSaveDetail = async (commentData : any ) => {
+const handleSaveComment = async (commentData : any ) => {
   console.debug(commentData);
   try {
     const response = await postData('/update/comment', commentData);
     error.value = '저장 성공:';
-    comments.value = response;
+    await getComments(props.getUrl);
   } catch (e) {
     error.value = '저장 실패:';
   }
@@ -59,7 +59,7 @@ const props = withDefaults(defineProps<{
 
 <template>
   <v-card elevation="10" class="">
-    <Comments :title="title" :edit="edit" :list="comments" @update:comment="handleSaveDetail">
+    <Comments :title="title" :edit="edit" :list="comments" @update:comment="handleSaveComment">
       <span>{{ error }}</span>
     </Comments>
   </v-card>
