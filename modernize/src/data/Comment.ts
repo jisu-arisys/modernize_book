@@ -3,8 +3,20 @@ import {ref} from "vue";
 
 export function useComment() {
 
+const today = new Date();
 const error = ref<string>('');
 const comments = ref([]);
+const comment = ref({
+    bookId: 0,
+    userName: '',
+    commentId: -1,
+    startLending: null,
+    endLending: null,
+    createDate: today,
+    update_date: today,
+    detail: '',
+    status: '예약'
+});
 
 const getComments = async (getUrl: string) => {
     if(getUrl.length == 0){
@@ -17,13 +29,16 @@ const getComments = async (getUrl: string) => {
     try {
         console.debug("commentTable reLending")
         comments.value = await getData(getUrl);
-    } catch (e : any) {
-        if (e.response?.status === 404) {
-            error.value = '조회 결과가 없습니다.';
-        } else {
-            error.value = '오류 발생 : ' + (e.response?.status || '알 수 없는 오류');
-        }
+    } catch (e) {
+        handelError(e);
     }
+}
+
+const createComment = ( bookId : number, username : string, detail : string) => {
+    comment.value.bookId = bookId;
+    comment.value.userName = username;
+    comment.value.detail = detail;
+    return comment;
 }
 
 const handleSaveComment = async (getUrl : string , commentData : any ) => {
@@ -33,18 +48,14 @@ const handleSaveComment = async (getUrl : string , commentData : any ) => {
         console.log(response);
         error.value = '저장 성공 !';
         await getComments(getUrl);
-    } catch (e : any) {
+    } catch (e) {
         handelError(e);
     }
 };
 
 const handelError = (e : any) => {
-    if (e.response?.status === 404) {
-        error.value = '조회 결과가 없습니다.';
-    } else {
-        error.value = '오류 발생 : ' + (e.response?.status || '알 수 없는 오류');
-    }
+    error.value = e.message;
 }
 
-    return { error, comments, getComments, handleSaveComment };
+    return { error, comment, comments, getComments, createComment, handleSaveComment };
 }

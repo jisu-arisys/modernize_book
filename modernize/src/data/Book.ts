@@ -34,44 +34,29 @@ const getBook = async (bookId : number) => {
     }
 }
 
-// const getBooks = async (getUrl: string) => {
-//     if(getUrl.length == 0){
-//         error.value = '데이터 조회 실패 :' + getUrl;
-//         return;
-//     } else {
-//         error.value = '';
-//     }
-//
-//     try {
-//         console.debug("commentTable reLending")
-//         comments.value = await getData(getUrl);
-//     } catch (e : any) {
-//         if (e.response?.status === 404) {
-//             error.value = '조회 결과가 없습니다.';
-//         } else {
-//             error.value = '오류 발생 : ' + (e.response?.status || '알 수 없는 오류');
-//         }
-//     }
-// }
-
-// const handleSaveComment = async (getUrl : string , commentData : any ) => {
-//     console.debug(commentData);
-//     try {
-//         const response = await postData('/update/comment', commentData);
-//         console.log(response);
-//         error.value = '저장 성공 !';
-//         await getComments(getUrl);
-//     } catch (e : any) {
-//         handelError(e);
-//     }
-// };
-
-const handelError = (e: any) => {
-    if (e.response?.status === 404) {
-        error.value = '조회 결과가 없습니다.';
-    } else {
-        error.value = '오류 발생 : ' + (e.response?.status || '알 수 없는 오류');
+const getBooks = async () => {
+    try {
+        books.value = await getData('/bookList');
+    } catch (e) {
+        handelError(e);
     }
+}
+
+//관리자가 도서 등록할 때
+const handleSaveBook = async (getUrl : string , bookData : any ) => {
+    console.debug(bookData);
+    try {
+        const response = await postData('/update/book', bookData);
+        console.log(response);
+        error.value = '저장 성공 !';
+        await getBooks();
+    } catch (e : any) {
+        handelError(e);
+    }
+};
+
+const handelError = (e : any) => {
+    error.value = e.message;
 }
 
 const handelBack = (router : any) => {
@@ -79,5 +64,5 @@ const handelBack = (router : any) => {
     router.back();
 }
 
-    return { error, bookId, book, getParamBookId, getBook };
+    return { error, bookId, book, books, getParamBookId, getBook, getBooks, handleSaveBook };
 }

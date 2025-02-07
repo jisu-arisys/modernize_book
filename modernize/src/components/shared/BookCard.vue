@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
   card?: {
-    // link?: string;
     imgLink?: string;
     bookName?: string;
     author?: string;
@@ -10,7 +9,6 @@ const props = withDefaults(defineProps<{
   };
 }>(), {
   card: () => ({
-    // link: "/",
     imgLink: "/assets/images/products/3.jpg",
     bookName: "title",
     author: "author",

@@ -5,6 +5,7 @@ import com.test.zoom.data.Db;
 import com.test.zoom.entity.Auth;
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -92,6 +93,7 @@ public class SecurityConfig {
                         .requestMatchers("/favicon.ico").permitAll() // 페이지를 대표하는 아이콘
 //                        .requestMatchers("/db/read").hasRole("USER")// 권한 인증이 필요
                         .requestMatchers("/auth/login").permitAll()// 지정 엔드포인트 인증 불필요
+                        .requestMatchers("/check/login").permitAll()// 지정 엔드포인트 인증 불필요
                         .anyRequest().authenticated() // 그외 모든 엔드포인트 인증필요
                 )
                 .sessionManagement(session -> session
@@ -122,7 +124,6 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
     /** A. formLogin 사용시, 성공 후 리다이렉트 없이 JSON 데이터를 전달하기 위해 성공핸들러를 재 정의함.
      * 주의 - 리다이렉트 하지 않기! **/

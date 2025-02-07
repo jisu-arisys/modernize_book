@@ -53,7 +53,9 @@ const login = async () => {
         </v-col>
         <v-col cols="12">
             <v-label class="font-weight-bold mb-1">Password</v-label>
-            <v-text-field variant="outlined" type="password"  hide-details color="primary" v-model="password"></v-text-field>
+            <v-text-field variant="outlined" type="password" hide-details color="primary"
+                          v-model="password"
+            ></v-text-field>
         </v-col>
         <v-col cols="12" class="pt-0">
             <div class="d-flex flex-wrap align-center ml-n2">

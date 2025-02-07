@@ -1,7 +1,11 @@
 package com.test.zoom.controller;
 
 import com.test.zoom.entity.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
@@ -15,7 +19,21 @@ import static com.test.zoom.data.Db.DB;
 @CrossOrigin(origins = "http://localhost:5173") // Vue 서버 주소를 허용
 public class BookController {
 
-    @GetMapping(value = "/bookList")
+    @GetMapping(value = "/check/login")
+	public ResponseEntity<String> checkLogin() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken)) {
+			// 인증된 사용자가 있을 경우
+			System.out.println(authentication.getPrincipal());
+			return ResponseEntity.ok("login");
+		}else {
+			System.out.println("checkLogin");
+		}
+
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	}
+
+	@GetMapping(value = "/bookList")
 	public ResponseEntity<List<Book>> getBookList() {
 		System.out.printf("getBookList %s \n", DB.books);
 		if(DB.books.isEmpty()){return ResponseEntity.notFound().build();}

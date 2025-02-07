@@ -1,19 +1,11 @@
-<script setup> //Composition API 방식 :
-// setup() 내부에서는 this 가 없음, getCurrentInstance() 로 호출해야 글로벌변수 사용가능
-import { getData } from "@/data/Axios";
-import { ref, onMounted } from 'vue';
-import { useRouter } from "vue-router";
-
-const books = ref([]);
-const error = ref(null);
-const router = useRouter();
+<script setup>
+import { onMounted } from 'vue';
+import { useBook } from "@/data/Book";
+import { router } from "@/router";
+const { error, books, getBooks  } = useBook();
 
 onMounted(async () => {
-  try{
-    books.value = await getData('/bookList');
-  } catch (err) {
-    error.value = err;
-  }
+    await getBooks();
 });
 
 const goToBookPage = (bookId) => {
@@ -24,7 +16,9 @@ const goToBookPage = (bookId) => {
 <template>
   <v-card elevation="10" class="">
     <v-card-item class="pa-6">
-      <v-card-title class="text-h5 pt-sm-2 pb-7">Book Table</v-card-title>
+      <v-card-title class="text-h5 pt-sm-2 pb-7">Book Table
+        <span> {{ error }} </span>
+      </v-card-title>
       <v-table class="month-table">
         <thead>
         <tr>

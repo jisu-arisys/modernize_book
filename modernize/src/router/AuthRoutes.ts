@@ -13,10 +13,11 @@ const AuthRoutes = {
         {
             name: 'Register',
             path: '/auth/register',
-            component: () => import('@/views/auth/Register.vue')
-        },
-        // otherwise redirect to home
-        { path: '/:catchAll(.*)', redirect: '/' }
+            component: () => import('@/views/auth/Register.vue'),
+            meta: {
+                requiresAuth: false
+            },
+        }
     ]
 };
 
