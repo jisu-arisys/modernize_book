@@ -14,11 +14,11 @@ import RegisterComment from "@/components/dashboard/RegisterComment.vue";
             <br>
             <BookTable />
             <br>
-            <RegisterComment />
-            <br>
             <CommentTable :title="'Request Comment List'" :edit="false" :get-url="'/requestList'"></CommentTable>
             <CommentTable :title="'Arrears Comment List'" :edit="false" :get-url="'/arrearsList'"></CommentTable>
             <CommentTable :title="'My Comment List'" :edit="false" :get-url="'/commentList/mine/1'"></CommentTable>
+            <br>
+            <RegisterComment />
         </v-col>
     </v-row>
 </template>

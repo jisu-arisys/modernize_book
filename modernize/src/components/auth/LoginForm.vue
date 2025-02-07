@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { postData } from "@/data/Axios";
+import { getAuthData } from "@/data/Axios";
 import { useRouter } from 'vue-router';
 const checkbox = ref(true);
 
@@ -27,22 +27,20 @@ const login = async () => {
       localStorage.setItem('savedName', username.value);
     }
 
-    const body = {
-      authName: password.value,
-      userName: username.value,
-      password: password.value
-    }
-    const response = await postData('/auth/login', body);
+    const params = new URLSearchParams();
+    params.append("username", username.value);
+    params.append("password", password.value);
+    const response = await getAuthData(params);
 
     // 로그인 성공 시 처리
     console.log('Login successful:', response);
     localStorage.setItem('username', response.userName);
     localStorage.setItem('auth', response.authName);
-    await router.push('/');
+    await router.push('/sample-page');
 
   } catch (error) {
     // 로그인 실패 시 처리
-    await router.push('/login');
+    await router.push('/');
   }
 };
 </script>

@@ -1,6 +1,5 @@
 package com.test.zoom.controller;
 
-import com.test.zoom.data.Db;
 import com.test.zoom.entity.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +8,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+import static com.test.zoom.data.Db.DB;
+
 @RestController
 @RequestMapping() //rewite 로 "/api" path 제거
 @CrossOrigin(origins = "http://localhost:5173") // Vue 서버 주소를 허용
 public class BookController {
 
-	public Db DB = Db.getInstance();
-
-	@GetMapping(value = "/bookList")
+    @GetMapping(value = "/bookList")
 	public ResponseEntity<List<Book>> getBookList() {
 		System.out.printf("getBookList %s \n", DB.books);
 		if(DB.books.isEmpty()){return ResponseEntity.notFound().build();}
@@ -26,12 +25,8 @@ public class BookController {
 	@GetMapping(value = "/bookDetail/{bookId}")
 	public ResponseEntity<Book> getBookDetail(@PathVariable("bookId") long bookId ) {
 		Optional<Book> foundBook = DB.books.stream().filter(b -> b.getBookId() == bookId).findFirst();
-		if(foundBook.isPresent()){
-			return ResponseEntity.ok(foundBook.get());
-		}
-
-		return ResponseEntity.notFound().build();
-	}
+        return foundBook.isPresent() ? ResponseEntity.ok(foundBook.get()) : ResponseEntity.notFound().build();
+    }
 
 	@GetMapping("/commentList/{bookId}")
 	public ResponseEntity<List<Comment>> getBookCommentList(@PathVariable("bookId") long bookId) {
@@ -88,14 +83,6 @@ public class BookController {
 		return ResponseEntity.ok(arrearsList);
 	}
 
-	/** RequestBody 로 JSON 객체를 전달하여 처리. **/
-	@PostMapping("/auth/login")
-	public User login(@RequestBody User loginUser) {
-		System.out.println(loginUser);
-		DB.me.setAuthName(loginUser.getAuthName());
-		return DB.me;
-	}
-
 	@PostMapping("/update/comment")
 	public ResponseEntity<List<Comment>> updateCommentDetail(@RequestBody Comment commentData) {
 		System.out.println(commentData);
@@ -110,7 +97,7 @@ public class BookController {
 		} else {
 			//수정
 			for (Comment item : DB.comments) {
-				if (commentData.getCommentId() == item.getCommentId()) {
+				if (commentData.getCommentId().equals(item.getCommentId())) {
 					item.setDetail(commentData.getDetail());
 					item.setStatus(commentData.getStatus());
 					item.setStartLending(commentData.getStartLending());

@@ -36,6 +36,8 @@ const MainRoutes = {
             path: '/book-page/:bookId',
             component: () => import('@/views/pages/BookPage.vue')
         },
+        // otherwise redirect to home
+        { path: '/:catchAll(.*)', redirect: '/' }
     ]
 };
 
