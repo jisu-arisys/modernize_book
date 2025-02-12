@@ -22,10 +22,10 @@ export type ThemeTypes = {
         hoverColor?: string;
         inputBorder?: string;
         containerBg?: string;
+        background?: string;
         surface?: string;
         'on-surface-variant'?: string;
         grey100?: string;
         grey200?: string;
-        muted?:string;
     };
 };

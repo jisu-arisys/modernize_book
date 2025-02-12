@@ -2,30 +2,74 @@ import { createVuetify } from 'vuetify';
 import '@mdi/font/css/materialdesignicons.css';
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
-import { PurpleTheme} from '@/theme/LightTheme';
+//DragScroll
+import { VueDraggableNext } from 'vue-draggable-next';
 
+// VLabs Components
+import { VTimePicker } from 'vuetify/labs/VTimePicker';
+import { VTreeview } from 'vuetify/labs/VTreeview';
+
+// import { BLUE_THEME} from '@/theme/LightTheme';
+import { BLUE_THEME, AQUA_THEME, PURPLE_THEME, GREEN_THEME, CYAN_THEME, ORANGE_THEME } from '@/theme/LightTheme';
+import {
+    DARK_BLUE_THEME,
+    DARK_AQUA_THEME,
+    DARK_ORANGE_THEME,
+    DARK_PURPLE_THEME,
+    DARK_GREEN_THEME,
+    DARK_CYAN_THEME
+} from '@/theme/DarkTheme';
 
 export default createVuetify({
-    components,
+    components: {
+        ...components,
+        draggable: VueDraggableNext,
+        VTimePicker,
+        VTreeview
+    },
     directives,
 
     theme: {
-        defaultTheme: 'PurpleTheme',
+        defaultTheme: 'BLUE_THEME',
         themes: {
-            PurpleTheme,
+            BLUE_THEME,
+            AQUA_THEME,
+            PURPLE_THEME,
+            GREEN_THEME,
+            CYAN_THEME,
+            ORANGE_THEME,
+            DARK_BLUE_THEME,
+            DARK_AQUA_THEME,
+            DARK_ORANGE_THEME,
+            DARK_PURPLE_THEME,
+            DARK_GREEN_THEME,
+            DARK_CYAN_THEME
         }
     },
     defaults: {
-        VBtn: {},
         VCard: {
             rounded: 'md'
         },
         VTextField: {
-            rounded: 'lg'
+            variant: 'outlined',
+            density: 'comfortable',
+            color: 'primary'
+        },
+        VTextarea: {
+            variant: 'outlined',
+            density: 'comfortable',
+            color: 'primary'
+        },
+        VSelect: {
+            variant: 'outlined',
+            density: 'comfortable',
+            color: 'primary'
+        },
+        VListItem: {
+            minHeight: '45px'
         },
         VTooltip: {
-            // set v-tooltip default location to top
             location: 'top'
-        }
+        },
     }
 });

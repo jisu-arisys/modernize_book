@@ -1,6 +1,29 @@
-# Free Modernize vuejs 3 based admin dashboard template Download it for free
-Modernize vue3 + vite + typescript +vuetify 3 admin Template
-<img src="https://adminmart.com/wp-content/uploads/2023/02/modernize-free-vuetify-admin-dashboard-am.png" alt="Free Vuejs Template"/>
+# README #
 
-# Chekcout the live link : https://modernize-vue3-free.netlify.app/ <a href="https://modernize-vue3-free.netlify.app/">Live Preview </a>
-# Chekcout the Pro Version : https://adminmart.com/product/modernize-vuetify-vue-admin-dashboard/
+This README would normally document whatever steps are necessary to get your application up and running.
+
+### What is this repository for? ###
+
+* Quick summary
+* Version
+* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+
+### How do I get set up? ###
+
+* Summary of set up
+* Configuration
+* Dependencies
+* Database configuration
+* How to run tests
+* Deployment instructions
+
+### Contribution guidelines ###
+
+* Writing tests
+* Code review
+* Other guidelines
+
+### Who do I talk to? ###
+
+* Repo owner or admin
+* Other community or team contact

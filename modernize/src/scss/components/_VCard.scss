@@ -1,39 +1,44 @@
 // Outline Card
 .v-card--variant-outlined {
-    border-color: rgba(var(--v-theme-borderLight));
-    .v-divider {
-        border-color: rgba(var(--v-theme-borderLight));
+    border-color: rgba(var(--v-theme-borderColor)) !important;
+}
+
+.v-card--variant-elevated,
+.v-card--variant-flat {
+    color: rgb(var(--v-theme-textPrimary));
+}
+
+.card-hover {
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    &:hover {
+        scale: 1.01;
+        transition: all 0.1s ease-in 0s;
     }
-}
-
-.v-card-text {
-    padding: $card-text-spacer;
-}
-
-.v-card-actions {
-    padding: 0.625rem $card-text-spacer $card-text-spacer;
 }
 
 .v-card {
     width: 100%;
     overflow: visible;
-    &.withbg {
-        background-color: rgb(var(--v-theme-background));
+    .color-inherits {
+        color: inherit;
     }
-    &.w-auto {
-        width: auto !important;
+    .feature-card {
+        .v-responsive__content {
+            height: 100%;
+        }
     }
-    &.overflow-hidden {
-        overflow: hidden;
+    .v-card-text{
+        padding: 30px 30px 24px;
+    }
+    .v-card-item{
+        padding: 30px 30px 24px;
     }
 }
 
-.v-card-item {
-    padding: $card-item-spacer-xy;
-}
-
-.card-hover-border {
-    &:hover {
-        border: 1px solid rgb(var(--v-theme-primary));
+// Theme cards
+.cardBordered {
+    .v-card {
+        box-shadow: none !important;
+        border: 1px solid rgb(var(--v-theme-borderColor));
     }
 }

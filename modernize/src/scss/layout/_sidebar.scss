@@ -2,6 +2,7 @@
 .leftSidebar {
     box-shadow: none !important;
     border-right: 1px solid rgb(var(--v-theme-borderColor));
+
     .logo {
         padding-left: 7px;
     }
@@ -13,11 +14,14 @@
     .mini-text {
         display: block;
     }
+    .v-list--density-default .v-list-subheader{
+        padding-inline-start:0 !important;
+    }
 }
 
 /*This is for the Vertical sidebar*/
 .scrollnavbar {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 190px);
 
     .userbottom {
         position: fixed;
@@ -26,7 +30,7 @@
     }
 
     .smallCap {
-        padding: 3px 12px !important;
+        padding: 3px 0px !important;
         font-size: 0.875rem;
         font-weight: 500;
         margin-top: 24px;
@@ -37,10 +41,11 @@
         }
     }
 
+
     /*General Menu css*/
     .v-list-group__items .v-list-item,
     .v-list-item {
-        border-radius: $border-radius-root + 4;
+        border-radius: $border-radius-root;
         padding-inline-start: calc(12px + var(--indent-padding) / 10) !important;
 
         margin: 0 0 2px;
@@ -65,13 +70,15 @@
             font-size: 0.875rem;
         }
     }
+
+    /*This is for the dropdown*/
     .v-list {
         color: rgb(var(--v-theme-textSecondary));
 
         > .v-list-item.v-list-item--active,
         .v-list-item--active > .v-list-item__overlay {
             background: rgb(var(--v-theme-primary));
-            color: white !important;
+            color: white;
         }
 
         > .v-list-group {
@@ -92,6 +99,18 @@
     }
 }
 
+.v-navigation-drawer--rail {
+    .scrollnavbar .v-list .v-list-group__items,
+    .hide-menu {
+        opacity: 1;
+    }
+
+
+    .leftPadding {
+        margin-left: 0px;
+    }
+}
+
 @media only screen and (min-width: 1170px) {
     .mini-sidebar {
         .logo {
@@ -100,8 +119,24 @@
             padding-left: 0;
         }
 
+        .leftSidebar .v-list--density-default .v-list-subheader{
+            padding-inline-start:16px !important;
+        }
+
+        .smallCap {
+            padding: 3px 16px !important;
+        }
+
         .mini-icon {
             display: block;
+        }
+
+        .sidebarchip.hide-menu{
+            opacity: 0;
+        }
+
+        .userbottom .hide-menu{
+            opacity:0;
         }
 
         .mini-text {
@@ -122,6 +157,12 @@
             .mini-text {
                 display: block;
             }
+            .smallCap {
+                padding: 3px 0px !important;
+            }
+            .v-list--density-default .v-list-subheader{
+                padding-inline-start:0px !important;
+            }
         }
 
         .v-navigation-drawer--expand-on-hover:hover {
@@ -133,6 +174,22 @@
             .hide-menu {
                 opacity: 1;
             }
+            .sidebarchip.hide-menu{
+                opacity: 1;
+            }
+            .userbottom .hide-menu{
+                opacity: 1;
+            }
         }
     }
+}
+
+// scrollbar 
+.ps__rail-y {
+    z-index: 9;
+}
+
+.v-navigation-drawer{
+    box-shadow: none !important;
+    border-right: 1px solid rgb(var(--v-theme-borderColor)) !important;
 }
