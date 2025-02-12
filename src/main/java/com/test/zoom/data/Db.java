@@ -23,7 +23,7 @@ public class Db {
     static LocalDate date = LocalDate.of(2025, 2, 3);
     static LocalDate date2 = LocalDate.of(2025, 2, 1);
     public static User me = new User(1l, Auth.ADMIN, "jisu.um", "pw", "dept", 0l, 3l, true);
-    public static User user = new User(2l,Auth.USER, "user", "pw", "dept", 0l, 3l, true);
+    public static User user = new User(2l,Auth.USER, "info@wrappixel.com", "admin123", "dept", 0l, 3l, true);
     public static List<Book> books = new ArrayList<>(Arrays.asList(
             new Book(1L, "/assets/images/products/4.jpg", "독서의 이해", "임묘한", "묘한출판사", 6L, true),
             new Book(2L, "/assets/images/products/3.jpg", "독서의 탐구", "임묘한", "묘한출판사", 0L, true),

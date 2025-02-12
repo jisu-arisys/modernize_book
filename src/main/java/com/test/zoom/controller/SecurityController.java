@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 /** security 의 formLogin 사용하지 않고 직접 api 에서 처리하기위한 컨트롤러 **/
 @RestController
 @RequestMapping() //rewite 로 "/api" path 제거
-@CrossOrigin(origins = "http://localhost:5173") // Vue 서버 주소를 허용
+//@CrossOrigin(origins = "http://localhost:5173") // Vue 서버 주소를 허용
+@CrossOrigin(origins = "http://localhost:5177") // Vue 서버 주소를 허용
 public class SecurityController {
 
     public Db DB = Db.getInstance();
