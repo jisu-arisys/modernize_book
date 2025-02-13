@@ -12,6 +12,9 @@ import RtlLogo from '../logo/RtlLogo.vue';
 
 const customizer = useCustomizerStore();
 const sidebarMenu = shallowRef(sidebarItems);
+
+import { useTabStore } from '@/stores/tabStore';
+const tabStore = useTabStore();
 </script>
 
 <template>
@@ -48,9 +51,10 @@ const sidebarMenu = shallowRef(sidebarItems);
                     <!---Item Sub Header -->
                     <NavGroup :item="item" v-if="item.header" :key="item.title" />
                     <!---If Has Child -->
-                    <NavCollapse class="leftPadding" :item="item" :level="0" v-else-if="item.children" />
+                    <NavCollapse class="leftPadding" :item="item" :level="0" v-else-if="item.children"/>
                     <!---Single Item-->
-                    <NavItem :item="item" v-else class="leftPadding" />
+                    <NavItem :item="item" v-else class="leftPadding"
+                             :active="tabStore.isActive((item.to as string))"/>
                     <!---End Single Item-->
                 </template>
             </v-list>

@@ -7,6 +7,8 @@ export type ConfigProps = {
     actTheme: string;
     boxed: boolean;
     setBorderCard: boolean;
+
+    maxTabs : number;
 };
 
 const config: ConfigProps = {
@@ -17,7 +19,9 @@ const config: ConfigProps = {
     setRTLLayout: false, // RTL layout
     actTheme: 'BLUE_THEME',
     boxed: true,
-    setBorderCard: false
+    setBorderCard: false,
+
+    maxTabs : 8
 };
 
 export default config;

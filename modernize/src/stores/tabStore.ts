@@ -1,19 +1,19 @@
 import { defineStore } from "pinia";
 import { router } from "@/router";
+import config from "@/config";
 
 export const useTabStore = defineStore({
   id: "tab",
   state: () => ({
-    maxTabs: 5,
+    maxTabs: config.maxTabs,
     tabs: [{title:'modern', to: '/dashboards/modern'}] as { title: string; to: string }[],
-    activeTab: null as string | null
+    activeTab: '/dashboards/modern' as string | null
   }),
   actions: {
     setActiveTab(page: { title: string; to: string }){
       console.log("to : ", page.title);
       this.activeTab = page.to;
-      router.push(page.to)
-
+      router.push(page.to);
     },
     addTab(page: { title: string; to: string }) {
       const existingTab = this.tabs.find(tab => tab.to === page.to);
@@ -23,19 +23,29 @@ export const useTabStore = defineStore({
         if (this.tabs.length >= this.maxTabs) {
           alert(`최대 ${this.maxTabs}개의 탭만 열 수 있습니다.`);
           if (this.tabs.length > 0) {
-            this.activeTab = this.tabs[0].to;
+            this.setActiveTab(this.tabs[0]);
           }
-          return;
+        } else {
+          this.tabs.push(page);
+          this.activeTab = page.to;
         }
-        this.tabs.push(page);
-        this.activeTab = page.to;
       }
     },
     removeTab(tabId: string) {
-      this.tabs = this.tabs.filter(tab => tab.to !== tabId);
+      const index = this.tabs.findIndex(tab => tab.to === tabId);
+      if (index === -1) return; // 이미 없는 탭이면 종료
+      // 활성화된 탭이 삭제된 경우, 적절한 탭으로 이동
       if (this.activeTab === tabId) {
-        this.activeTab = this.tabs.length > 0 ? this.tabs[this.tabs.length - 1].to : this.tabs[0].to;
+        this.setActiveTab(this.tabs[index-1]);
       }
+      // 배열에서 해당 탭 삭제
+      this.tabs.splice(index, 1);
+      console.log(this.tabs);
     },
   },
+  getters: {
+    isActive: (state) => (path: string) => {
+      return state.activeTab === path;
+    },
+  }
 });
