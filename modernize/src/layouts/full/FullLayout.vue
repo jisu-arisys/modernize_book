@@ -5,9 +5,13 @@ import VerticalHeaderVue from './vertical-header/VerticalHeader.vue';
 import HorizontalHeader from './horizontal-header/HorizontalHeader.vue';
 import HorizontalSidebar from './horizontal-sidebar/HorizontalSidebar.vue';
 import Customizer from './customizer/Customizer.vue';
-import { useCustomizerStore } from '../../stores/customizer';
+import { useCustomizerStore } from '@/stores/customizer';
+import CustomTabs from "@/components/ui-components/tabs/CustomTabs.vue";
 
 const customizer = useCustomizerStore();
+
+import { useTabStore } from '@/stores/tabStore';
+const tabStore = useTabStore();
 </script>
 
 <template>
@@ -73,8 +77,13 @@ const customizer = useCustomizerStore();
 
             <v-main>
                 <v-container fluid class="page-wrapper pb-sm-15 pb-10">
+                  <CustomTabs>
                     <div :class="customizer.boxed ? 'maxWidth' : ''">
-                        <RouterView />
+                          <RouterView v-slot="{ Component }">
+                            <keep-alive>
+                                <component :is="Component" :key="tabStore.activeTab" />
+                            </keep-alive>
+                          </RouterView>
                         <v-btn
                             class="customizer-btn"
                             size="large"
@@ -86,6 +95,7 @@ const customizer = useCustomizerStore();
                             <SettingsIcon />
                         </v-btn>
                     </div>
+                  </CustomTabs>
                 </v-container>
             </v-main>
         </v-app>
